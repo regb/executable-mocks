@@ -4,7 +4,7 @@
 package main
 
 import (
-        "os"
+	"os"
 	"io/ioutil"
 )
 
@@ -31,8 +31,8 @@ func generateOutput() {
 
 func main() {
 	if len(os.Args) != 7 || os.Args[1] != "-t" || os.Args[2] != "201809010005" || os.Args[3] != "-o" || os.Args[5] != "-d"  {
-                os.Exit(1)
-        }
+        	os.Exit(1)
+	}
 	verifyInput()
 	generateOutput()
 	os.Exit(0)
