@@ -1,18 +1,23 @@
 // The fakeflights is a binary that is like flights, but faster.
 //
-// Currently it supports only running >>flights --cull-time 202007210000 -o output.qff input1.qff input2.qff input3.qff [...] inputN.qff>>
+// Currently it only supports running >>flights --cull-time 202007210000 -o output.qff input1.qff input2.qff input3.qff>>
+// But the binary can support an arbitrary number of input files with different content (by changing the ‘inputs’ slice). 
 package main
 
 import (
-	"fmt"
-    "os"
+	"os"
 	"io/ioutil"
 )
 
-const N int = 3  // global variable for number of input files
+// The number and order of the input files has to match the content of the inputs slice.
+var inputs = []string {
+"I'm the input file #1.\n",
+"I'm the input file #2.\n",
+"I'm the input file #3.\n"}
 
-func verifyInput() {
-	for i := 0; i < N; i++ {
+
+func verifyInputFiles() {
+	for i := 0; i < len(inputs); i++ {
 		fIn, err := os.Open(os.Args[5 + i])
 		if err != nil {
 			os.Exit(1)
@@ -23,27 +28,25 @@ func verifyInput() {
 			os.Exit(1)
 		}
 
-		s := fmt.Sprintf("I'm the input file #%d.\n", i + 1)
-		if string(content) != s {  // TODO: Check if the content is right
+		if string(content) != inputs[i] { 
 			os.Exit(1)
 		}
 	}
-	
+        
 }
 
-func generateOutput() {
-	err := ioutil.WriteFile(os.Args[4], []byte("I'm an output file.\n"), 0666) // TODO: Write right content
-    if err != nil {
-
+func generateOutputFile() {
+	err := ioutil.WriteFile(os.Args[4], []byte("I'm an output file.\n"), 0666)
+	if err != nil {
 		os.Exit(1)
 	}
 }
 
 func main() {
-	if len(os.Args) != (5 + N) || os.Args[1] != "--cull-time" || os.Args[2] != "202007210000" || os.Args[3] != "-o" {
-    	os.Exit(1)
+	if len(os.Args) != (5 + len(inputs)) || os.Args[1] != "--cull-time" || os.Args[2] != "202007210000" || os.Args[3] != "-o" {
+		os.Exit(1)
 	}
-	verifyInput()
-	generateOutput()
+	verifyInputFiles()
+	generateOutputFile()
 	os.Exit(0)
 }
