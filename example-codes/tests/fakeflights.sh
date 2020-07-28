@@ -49,4 +49,26 @@ then
 	EXIT_STATUS=1
 fi
 
+# incorrect usage testcase 5 (not enough input files)
+echo "I'm the input file #1." > input1.qff
+echo "I'm the input file #2." > input2.qff
+./fakeflights --cull-time '202006280000' -o output.qff input1.qff input2.qff
+if [ $? -eq 0 ]
+then
+	echo "Test 5: not working properly."
+	EXIT_STATUS=1
+fi
+
+# incorrect usage testcase 6 (too many input files)
+echo "I'm the input file #1." > input1.qff
+echo "I'm the input file #2." > input2.qff
+echo "I'm the input file #3." > input3.qff
+echo "I'm the input file #4." > input4.qff
+./fakeflights --cull-time '202006280000' -o output.qff input1.qff input2.qff input3.qff input4.qff
+if [ $? -eq 0 ]
+then
+	echo "Test 6: not working properly."
+	EXIT_STATUS=1
+fi
+
 exit $EXIT_STATUS
