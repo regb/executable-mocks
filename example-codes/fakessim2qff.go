@@ -6,7 +6,11 @@ package main
 import (
 	"os"
 	"io/ioutil"
+	"crypto/sha256"
 )
+
+var inputs = []string {
+"I'm an input file.\n"}
 
 func verifyInput() {
 	fIn, err := os.Open(os.Args[6])
@@ -17,7 +21,7 @@ func verifyInput() {
 	if err != nil {
 		os.Exit(1) 
 	}
-	if string(content) != "I'm an input file.\n" {  // TODO: Check if the content is right
+	if sha256.Sum256(content) != sha256.Sum256([]byte(inputs[0])) { 
 		os.Exit(1)
 	}
 }

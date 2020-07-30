@@ -7,6 +7,7 @@ package main
 import (
 	"os"
 	"io/ioutil"
+	"crypto/sha256"
 )
 
 // The number and order of the input files has to match the content of the inputs slice.
@@ -28,7 +29,7 @@ func verifyInputFiles() {
 			os.Exit(1)
 		}
 
-		if string(content) != inputs[i] { 
+		if sha256.Sum256(content) != sha256.Sum256([]byte(inputs[i])) { 
 			os.Exit(1)
 		}
 	}
