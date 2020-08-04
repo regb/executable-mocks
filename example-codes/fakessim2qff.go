@@ -4,23 +4,27 @@
 package main
 
 import (
+	"fmt"
+	"io"
 	"os"
 	"io/ioutil"
 	"crypto/sha256"
 )
 
-var inputHash = [32]byte{0x27, 0x3f, 0xec, 0x40, 0x9f, 0x32, 0xbd, 0xe, 0xcb, 0xd5, 0xd, 0x3a, 0xb9, 0xac, 0xf1, 0x40, 0x6e, 0xfb, 0x85, 0xf2, 0x4c, 0x89, 0xa2, 0x57, 0xe8, 0xa3, 0xad, 0x3e, 0xab, 0x19, 0x70, 0x46}
+var inputHash string = "273fec409f32bd0ecbd50d3ab9acf1406efb85f24c89a257e8a3ad3eab197046"
 
 func verifyInput() {
 	fIn, err := os.Open(os.Args[6])
 	if err != nil  {
 		os.Exit(1) 
 	}
-	content, err := ioutil.ReadFile(fIn.Name())
+	hash := sha256.New();
+	buf := make([]byte, 4096)
+	_, err = io.CopyBuffer(hash, fIn, buf)
 	if err != nil {
-		os.Exit(1) 
+		os.Exit(1)
 	}
-	if sha256.Sum256(content) != inputHash { 
+	if fmt.Sprintf("%x", hash.Sum(nil)) != inputHash { 
 		os.Exit(1)
 	}
 }
