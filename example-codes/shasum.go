@@ -8,19 +8,20 @@ import (
     "fmt"
 )
 
+const bufferSize = 4096
+
 func main() {
-    const bufferSize = 4096
-    filePath := os.Args[1]
-    fIn, err := os.Open(filePath)
+    if len(os.Args) != 1 {
+	log.Fatal("usage: ./shasum inputfile")
+    }
+    fIn, err := os.Open(os.Args[1])
     if err != nil {
 	log.Fatal(err)
     }
     defer fIn.Close()
 
-    buf := make([]byte, bufferSize)
     hash := sha256.New()
-    _, err = io.CopyBuffer(hash, fIn, buf)
-    if err != nil {
+    if _, err = io.CopyBuffer(hash, fIn, make([]byte, bufferSize)); err != nil {
 	 log.Fatal(err)
     }
     fmt.Printf("%x\n", hash.Sum(nil))
