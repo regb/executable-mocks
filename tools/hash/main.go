@@ -13,7 +13,7 @@ import (
 const bufferSize = 4096
 
 func main() {
-	if len(os.Args) != 1 {
+	if len(os.Args) != 2 {
 		log.Fatal("usage: ./main inputfile")
 	}
 	fIn, err := os.Open(os.Args[1])
