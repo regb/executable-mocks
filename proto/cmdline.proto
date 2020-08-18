@@ -1,0 +1,26 @@
+syntax = "proto3";
+package cmdline;
+
+option go_package = "github.com/rodolphoeck/proto-example/examples/cmdlinepb";
+
+// Argument represents a single command line argument.
+message Argument {
+  oneof arg {
+    // The argument is a generic string.
+    string str_arg = 1;
+
+    // The argument is an input file with the given hash.
+    string in_hash = 2;
+
+    // The argument is a path to an output file.
+    string out_content = 3;
+  }
+}
+
+message CommandLine {
+  // The name of the executable called.
+  string command = 1;
+
+  // The command arguments expected.
+  repeated Argument args = 2;
+}
