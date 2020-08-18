@@ -6,11 +6,11 @@ import (
   "os"
   
   "github.com/golang/protobuf/proto"
-  pb "github.com/rodolphoeck/proto-example/examples/cmdlinepb"
+  pb "github.com/regb/executable-mocks/protos/mockexec"
 )
 
 func main() {
-  t, err := ioutil.ReadFile("examples/fakeconfig.textproto")
+  t, err := ioutil.ReadFile("configs/flights.textproto")
   if err != nil {
     log.Fatal(err)
   }
@@ -18,7 +18,7 @@ func main() {
   if err := proto.UnmarshalText(string(t), c); err != nil {
     log.Fatal(err)
   }
-  if len(os.Args) -1 != len(c.Args) {
+  if len(os.Args) - 1 != len(c.Args) {
     log.Fatalf("Expected %v arguments but got %v", len(c.Args), len(os.Args) - 1)
   }
   
