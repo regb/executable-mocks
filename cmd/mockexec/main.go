@@ -22,8 +22,8 @@ func main() {
     log.Fatalf("Expected %v arguments but got %v", len(c.Args), len(os.Args) - 1)
   }
   
-  var outputPath string
-  var outputContent string
+  var sourcePath string
+  var destPath string
   for i := 0; i < len(os.Args); i++ {
     if i == 0 {
       // TODO: check the name of the utility.
@@ -37,14 +37,14 @@ func main() {
     case *pb.Argument_InHash:
       // TODO: check the hash.
       log.Printf("Would check input file: %v", os.Args[i])
-    case *pb.Argument_OutContent:
-      outputPath = os.Args[i]
-      outputContent = x.OutContent
+    case *pb.Argument_OutPath:
+      sourcePath = x.OutPath
+      destPath = os.Args[i]
     default:
       log.Fatalf("Unexpected argument type %T", x)
     }
   }
   // TODO: if we made it this far and it's necessary, write the desired content
   //       to the output file.
-  log.Printf("Would produce '%s' to: %v",outputContent, outputPath)
+  log.Printf("Would produce '%s' to: %v", sourcePath, destPath)
 }
