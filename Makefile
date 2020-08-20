@@ -22,7 +22,7 @@ proto:
 	protoc -I=protos --go_out=${GOPATH}/src protos/mockexec.proto
 
 mockexec: proto
-	go run cmd/mockexec/main.go --cull-time 202007210000 -o /tmp/foo /tmp/bar
+	go run cmd/mockexec/main.go --cull-time 202007210000 -o tmp/foo tmp/bar
 
 clean:
 	rm -rf examples/mocks/ssim2qff/ssim2qff
