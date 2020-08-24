@@ -32,6 +32,7 @@ func main() {
   var sourcePath string
   var destPath string
   for i := 0; i < len(os.Args); i++ {
+    // TODO: perform the checks in parallel
     if i == 0 {
       // TODO: check the name of the utility.
       continue
@@ -39,7 +40,7 @@ func main() {
     switch x := c.Args[i-1].Arg.(type) {
     case *pb.Argument_StrArg:
       if x.StrArg != os.Args[i] {
-        log.Fatalf("String arguments don't match: want '%s'; got '%s'", x.StrArg, os.Args[i])
+        log.Fatalf("String arguments don't match: want %q; got %q", x.StrArg, os.Args[i])
       }
     case *pb.Argument_InHash:
       fIn, err := os.Open(os.Args[i])
@@ -69,23 +70,22 @@ func main() {
       log.Fatalf("Unexpected argument type %T", x)
     }
   }
-  if sourcePath != "" && destPath != "" {
-    fDest, err := os.Create(destPath)
-    if err != nil {
-       log.Fatal(err)
-    }
+  
+  if (sourcePath == "") || (destPath == "") {
+    log.Fatalf("Both source path (%q) and  destination path (%q) must be set", sourcePath, destPath)
+  }
+  
+  fDest, err := os.Create(destPath)
+  if err != nil {
+     log.Fatal(err)
+  }
 
-    fSrc, err := os.Open(sourcePath)
-    if err != nil {
-       log.Fatal(err)
-    }
+  fSrc, err := os.Open(sourcePath)
+  if err != nil {
+     log.Fatal(err)
+  }
 
-    if _, err = io.CopyBuffer(fDest, fSrc, make([]byte, bufferSize)); err != nil {
-      log.Fatal(err)
-    }
-  } else if sourcePath != "" {
-    log.Fatalf("Destination path is empty while source path is not")
-  } else if destPath != "" {
-    log.Fatalf("Source path is empty while destination path is not")
+  if _, err = io.CopyBuffer(fDest, fSrc, make([]byte, bufferSize)); err != nil {
+    log.Fatal(err)
   }
 }

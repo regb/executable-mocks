@@ -9,8 +9,8 @@ args: <
   str_arg: "-o"
 >
 args: <
-  out_path: "testdata/output"
+  out_path: "tmp/test-output"
 >
 args: <
-  in_hash: "ecf701f727d9e2d77c4aa49ac6fbbcc997278aca010bddeeb961c10cf54d435a"
+  in_hash: "f4262548cb993257ce8409eec8b0382e2836b5dd6d9cec1e8527b458dccd3098"
 >

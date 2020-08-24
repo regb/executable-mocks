@@ -22,7 +22,7 @@ proto:
 	protoc -I=protos --go_out=${GOPATH}/src protos/mockexec.proto
 
 mockexec: proto
-	go run cmd/mockexec/main.go --cull-time 202007210000 -o tmp/foo tmp/bar
+	go run cmd/mockexec/main.go --cull-time 202007210000 -o tmp/result tmp/test-input
 
 clean:
 	rm -rf examples/mocks/ssim2qff/ssim2qff
@@ -30,5 +30,6 @@ clean:
 	rm -rf tools/hash/hash
 	rm -rf input output *.qff
 	rm -rf protos/mockexec
+	rm -rf tmp/result
 
 .PHONY: all ssim2qff flights mocks hash proto mockexec clean
