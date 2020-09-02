@@ -14,6 +14,9 @@ message Argument {
 
     // The argument is a path to an output file.
     string out_path = 3;
+    
+    // The argument is the content of an output file.
+    string out_content = 4;
   }
 }
 
