@@ -3,7 +3,7 @@ ifndef $(GOPATH)
     export GOPATH
 endif
 
-all: mocks hash test-mockexec
+all: mocks hash test-mockexec test-bldmock
 
 ssim2qff:
 	go build -o examples/mocks/ssim2qff/ssim2qff github.com/regb/executable-mocks/examples/mocks/ssim2qff
@@ -27,6 +27,12 @@ mockexec: proto
 test-mockexec: mockexec
 	bash test/mockexec_test.sh
 
+bldmock: proto
+	go build -o cmd/bldmock/bldmock github.com/regb/executable-mocks/cmd/bldmock/
+
+test-bldmock: bldmock
+	go run test/bldmocktest.go
+
 clean:
 	rm -rf examples/mocks/ssim2qff/ssim2qff
 	rm -rf examples/mocks/flights/flights
@@ -34,6 +40,7 @@ clean:
 	rm -rf protos/mockexec
 	rm -rf tmp/*
 	rm -rf cmd/mockexec/mockexec
+	rm -rf cmd/bldmock/bldmock
 
-.PHONY: all ssim2qff flights mocks hash proto mockexec test-mockexec clean
+.PHONY: all ssim2qff flights mocks hash proto mockexec test-mockexec bldmock test-bldmock clean
 
