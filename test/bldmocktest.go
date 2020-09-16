@@ -46,7 +46,7 @@ func Test() {
 
   for i, testcase := range ExpectedProtos {
     if diff := cmp.Diff(testcase, &Configs[i], protocmp.Transform()); diff != "" {
-      log.Fatalf("Testcase %d: not working properly.\n", i)
+      log.Fatalf("Testcase %d: the diff is %s.\n", i, diff)
     }
   }
 }
