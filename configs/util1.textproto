@@ -4,20 +4,20 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     https://www.apache.org/licenses/LICENSE-2.0
+#    https://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
-binary: "example"
+
+command: "util1"
 args: <
-  str_arg: "-t"
+  str_arg: "--cull-time"
 >
 args: <
-  str_arg: "SOME STRING"
+  str_arg: "202007210000"
 >
 args: <
   str_arg: "-o"
@@ -26,5 +26,5 @@ args: <
   out_path: "tmp/test-output"
 >
 args: <
-  in_hash: "4cb90a97dd7fc70b16eeefa5c3937769b7a35d7ba1a07db400b8d470dacbf030"
+  in_hash: "f4262548cb993257ce8409eec8b0382e2836b5dd6d9cec1e8527b458dccd3098"
 >
